@@ -1,0 +1,117 @@
+create table genero (
+  id_genero int primary key,
+  nombre_genero varchar(20)
+);
+
+
+create table consola (
+  id_consola int,	
+  nombre_consola varchar(30),	
+  fecha_lanzamiento date,
+  empresa varchar (20),
+  primary key (id_consola)
+);
+
+
+
+
+create table desarrolladora (
+  id_desarrolladora int primary key,
+  nombre_desarrolladora varchar(50)
+);
+
+
+create table videojuego(
+  id_videojuego int,
+  id_genero int,
+  nombre_videojuego varchar(60),
+  primary key (id_videojuego),
+  foreign key (id_genero) references genero(id_genero)
+);
+
+create table version_videojuego(
+  id_version int,
+  nombre_videojuego varchar (50),
+  ano_lanzamiento date,
+  id_videojuego_base int,
+  id_desarrolladora int,
+  primary key (id_version),
+  foreign key (id_videojuego_base) references videojuego(id_videojuego),
+  foreign key (id_desarrolladora) references desarrolladora(id_desarrolladora)
+  
+);
+
+
+create table requiere (
+  id_videojuego int,
+  id_consola int,
+  primary key (id_videojuego),
+  foreign key (id_consola) references consola(id_consola),
+  foreign key (id_videojuego) references version_videojuego(id_version)
+);
+
+
+create table venta (
+  id_version_videojuego int,
+  id_venta int,
+  ventas_na	numeric(10,2),
+  ventas_eu	numeric(10,2),
+  ventas_jp	numeric(10,2),
+  otras_ventas numeric(10,2),
+  ventas_globales numeric(10,2),
+  primary key (id_venta),
+  foreign key (id_version_videojuego) references version_videojuego(id_version)
+);
+
+
+
+COPY videojuego (id_videojuego, id_genero, nombre_videojuego)
+FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\videojuego.csv' 
+WITH DELIMITER ',';
+
+COPY version_videojuego (id_version, nombre_videojuego, ano_lanzamiento, id_videojuego_base, id_desarrolladora)
+FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\version_videojuego.csv' 
+WITH DELIMITER ',';
+
+COPY genero (id_genero, nombre_genero)
+FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\genero.csv'
+WITH DELIMITER ',';
+
+COPY ventas (id_videojuego, id_venta, ventas_na, ventas_eu, ventas_jp, otras_ventas, ventas_globales)
+FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\ventas.csv'
+WITH DELIMITER ',';
+
+COPY consola (id_consola, nombre_consola, fecha_lanzamiento, empresa)
+FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\consola.csv'
+WITH DELIMITER ',';
+
+COPY requiere (id_videojuego, id_consola)
+FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\requiere.csv'
+WITH DELIMITER ',';
+
+COPY desarrolladora (id_desarrolladora, nombre_desarrolladora)
+FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\desarrolladora.csv'
+WITH DELIMITER ',';
+
+
+
+select *
+from videojuego;
+
+select *
+from version_videojuego;
+
+select *
+from genero;
+
+select *
+from ventas;
+
+select *
+from consola;
+
+select *
+from requiere;
+
+select *
+from desarrolladora;
