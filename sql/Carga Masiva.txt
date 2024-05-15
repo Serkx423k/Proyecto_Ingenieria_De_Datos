@@ -1,6 +1,6 @@
 create table genero (
   id_genero int primary key,
-  nombre_genero varchar(20)
+  nombre_genero varchar(50)
 );
 
 
@@ -24,14 +24,14 @@ create table desarrolladora (
 create table videojuego(
   id_videojuego int,
   id_genero int,
-  nombre_videojuego varchar(60),
+  nombre_videojuego varchar(100),
   primary key (id_videojuego),
   foreign key (id_genero) references genero(id_genero)
 );
 
 create table version_videojuego(
   id_version int,
-  nombre_videojuego varchar (50),
+  nombre_videojuego varchar (100),
   ano_lanzamiento date,
   id_videojuego_base int,
   id_desarrolladora int,
@@ -67,31 +67,31 @@ create table venta (
 
 COPY videojuego (id_videojuego, id_genero, nombre_videojuego)
 FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\videojuego.csv' 
-WITH DELIMITER ',';
+WITH DELIMITER ',' CSV HEADER;
 
 COPY version_videojuego (id_version, nombre_videojuego, ano_lanzamiento, id_videojuego_base, id_desarrolladora)
 FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\version_videojuego.csv' 
-WITH DELIMITER ',';
+WITH DELIMITER ',' CSV HEADER;
 
 COPY genero (id_genero, nombre_genero)
 FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\genero.csv'
-WITH DELIMITER ',';
+WITH DELIMITER ',' CSV HEADER;
 
 COPY ventas (id_videojuego, id_venta, ventas_na, ventas_eu, ventas_jp, otras_ventas, ventas_globales)
 FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\ventas.csv'
-WITH DELIMITER ',';
+WITH DELIMITER ',' CSV HEADER;
 
 COPY consola (id_consola, nombre_consola, fecha_lanzamiento, empresa)
 FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\consola.csv'
-WITH DELIMITER ',';
+WITH DELIMITER ',' CSV HEADER;
 
 COPY requiere (id_videojuego, id_consola)
 FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\requiere.csv'
-WITH DELIMITER ',';
+WITH DELIMITER ',' CSV HEADER;
 
 COPY desarrolladora (id_desarrolladora, nombre_desarrolladora)
 FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\desarrolladora.csv'
-WITH DELIMITER ',';
+WITH DELIMITER ',' CSV HEADER;
 
 
 
