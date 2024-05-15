@@ -1,4 +1,4 @@
-﻿id_videojuego,id_venta,ventas_na,ventas_eu,ventas_jp,otras_ventas,ventas_globales
+﻿id_version_videojuego,id_venta,ventas_na,ventas_eu,ventas_jp,otras_ventas,ventas_globales
 1,101,41.49,29.02,3.77,8.46,82.74
 2,102,15.85,12.88,3.79,3.31,35.82
 3,103,15.75,11.01,3.28,2.96,33
