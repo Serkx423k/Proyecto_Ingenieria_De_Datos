@@ -24,14 +24,14 @@ create table desarrolladora (
 create table videojuego(
   id_videojuego int,
   id_genero int,
-  nombre_videojuego varchar(100),
+  nombre_videojuego varchar(200),
   primary key (id_videojuego),
   foreign key (id_genero) references genero(id_genero)
 );
 
 create table version_videojuego(
   id_version int,
-  nombre_videojuego varchar (100),
+  nombre_videojuego varchar (200),
   ano_lanzamiento date,
   id_videojuego_base int,
   id_desarrolladora int,
