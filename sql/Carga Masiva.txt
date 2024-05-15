@@ -13,8 +13,6 @@ create table consola (
 );
 
 
-
-
 create table desarrolladora (
   id_desarrolladora int primary key,
   nombre_desarrolladora varchar(50)
@@ -32,7 +30,7 @@ create table videojuego(
 create table version_videojuego(
   id_version int,
   nombre_videojuego varchar (200),
-  ano_lanzamiento date,
+  ano_lanzamiento int,
   id_desarrolladora int,
   id_videojuego_base int,
   primary key (id_version),
@@ -40,6 +38,8 @@ create table version_videojuego(
   foreign key (id_desarrolladora) references desarrolladora(id_desarrolladora)
   
 );
+
+
 
 
 create table requiere (
@@ -65,53 +65,39 @@ create table venta (
 
 
 
-COPY videojuego (id_videojuego, id_genero, nombre_videojuego)
-FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\videojuego.csv' 
-WITH DELIMITER ',' CSV HEADER;
-
-COPY version_videojuego (id_version, nombre_videojuego, ano_lanzamiento, id_videojuego_base, id_desarrolladora)
-FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\version_videojuego.csv' 
-WITH DELIMITER ',' CSV HEADER;
-
 COPY genero (id_genero, nombre_genero)
-FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\genero.csv'
-WITH DELIMITER ',' CSV HEADER;
-
-COPY ventas (id_videojuego, id_venta, ventas_na, ventas_eu, ventas_jp, otras_ventas, ventas_globales)
-FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\ventas.csv'
-WITH DELIMITER ',' CSV HEADER;
-
-COPY consola (id_consola, nombre_consola, fecha_lanzamiento, empresa)
-FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\consola.csv'
-WITH DELIMITER ',' CSV HEADER;
-
-COPY requiere (id_videojuego, id_consola)
-FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\requiere.csv'
+FROM 'C:\Users\Laboratorios EICT\Downloads\Proyecto_Ingenieria_De_Datos-main\Proyecto_Ingenieria_De_Datos-main\csv\genero.csv'
 WITH DELIMITER ',' CSV HEADER;
 
 COPY desarrolladora (id_desarrolladora, nombre_desarrolladora)
-FROM 'C:\Users\samue\Documents\Samuel\Uni\Tercer Semestre\Ing. de Datos\Proyecto\desarrolladora.csv'
+FROM 'C:\Users\Laboratorios EICT\Downloads\Proyecto_Ingenieria_De_Datos-main\Proyecto_Ingenieria_De_Datos-main\csv\desarrolladora.csv'
+WITH DELIMITER ',' CSV HEADER;
+
+COPY consola (id_consola, nombre_consola, fecha_lanzamiento, empresa)
+FROM 'C:\Users\Laboratorios EICT\Downloads\Proyecto_Ingenieria_De_Datos-main\Proyecto_Ingenieria_De_Datos-main\csv\consola.csv'
+WITH DELIMITER ',' CSV HEADER;
+
+COPY videojuego (id_videojuego, id_genero, nombre_videojuego)
+FROM 'C:\Users\Laboratorios EICT\Downloads\Proyecto_Ingenieria_De_Datos-main\Proyecto_Ingenieria_De_Datos-main\csv\videojuego.csv' 
 WITH DELIMITER ',' CSV HEADER;
 
 
 
-select *
-from videojuego;
 
-select *
-from version_videojuego;
+COPY version_videojuego (id_version, nombre_videojuego, ano_lanzamiento, id_desarrolladora, id_videojuego_base)
+FROM 'C:\Users\Laboratorios EICT\Downloads\Proyecto_Ingenieria_De_Datos-main\Proyecto_Ingenieria_De_Datos-main\csv\version_videojuego.csv' 
+WITH DELIMITER ',' CSV HEADER;
 
-select *
-from genero;
 
-select *
-from ventas;
+COPY venta (id_version_videojuego, id_venta, ventas_na, ventas_eu, ventas_jp, otras_ventas, ventas_globales)
+FROM 'C:\Users\Laboratorios EICT\Downloads\Proyecto_Ingenieria_De_Datos-main\Proyecto_Ingenieria_De_Datos-main\csv\venta.csv'
+WITH DELIMITER ',' CSV HEADER;
 
-select *
-from consola;
 
-select *
-from requiere;
 
-select *
-from desarrolladora;
+COPY requiere (id_videojuego, id_consola)
+FROM 'C:\Users\Laboratorios EICT\Downloads\Proyecto_Ingenieria_De_Datos-main\Proyecto_Ingenieria_De_Datos-main\csv\requiere.csv'
+WITH DELIMITER ',' CSV HEADER
+
+
+
