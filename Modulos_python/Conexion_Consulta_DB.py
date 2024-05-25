@@ -6,8 +6,8 @@ try:
         host = 'Localhost',
         user = 'postgres',
         password = '123456789',
-        database = 'Video_Games_Sales',
-        port = '5433'
+        database = 'Video_Games_Sale',
+        port = '5432'
     )
 
 
@@ -76,3 +76,31 @@ except Exception as ex:
 finally:
     connection.close()
     print("Conexión finalizada")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # Inicialización de la conexión con la base de datos
+
