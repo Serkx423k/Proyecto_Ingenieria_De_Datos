@@ -1,0 +1,55 @@
+WITH VersionesPorJuego AS (
+    SELECT vv.id_videojuego_base, COUNT(*) AS cantidad_versiones
+    FROM version_videojuego vv
+    GROUP BY vv.id_videojuego_base
+), VentasTotales AS (
+    SELECT vv.id_videojuego_base, SUM(vt.ventas_globales) AS total_ventas_globales
+    FROM venta vt
+    INNER JOIN version_videojuego vv ON vt.id_version_videojuego = vv.id_version
+    GROUP BY vv.id_videojuego_base
+), TopVersiones AS (
+    SELECT vpj.id_videojuego_base, vpj.cantidad_versiones, vt.total_ventas_globales
+    FROM VersionesPorJuego vpj
+    LEFT JOIN VentasTotales vt ON vpj.id_videojuego_base = vt.id_videojuego_base
+    ORDER BY vpj.cantidad_versiones DESC
+    LIMIT 3
+), BottomVersiones AS (
+    SELECT vpj.id_videojuego_base, vpj.cantidad_versiones, vt.total_ventas_globales
+    FROM VersionesPorJuego vpj
+    LEFT JOIN VentasTotales vt ON vpj.id_videojuego_base = vt.id_videojuego_base
+    ORDER BY vpj.cantidad_versiones ASC
+    LIMIT 3
+)
+SELECT tv.nombre_videojuego AS top_nombre_videojuego, tv.cantidad_versiones AS top_cantidad_versiones,
+       tv.total_ventas_globales AS top_ventas_globales,
+       bv.nombre_videojuego AS bottom_nombre_videojuego, bv.cantidad_versiones AS bottom_cantidad_versiones,
+       bv.total_ventas_globales AS bottom_ventas_globales
+FROM (
+    SELECT tj.id_videojuego_base, tj.cantidad_versiones, tj.total_ventas_globales, vj.nombre_videojuego
+    FROM TopVersiones tj
+    LEFT JOIN videojuego vj ON tj.id_videojuego_base = vj.id_videojuego
+) AS tv
+LEFT JOIN (
+    SELECT bj.id_videojuego_base, bj.cantidad_versiones, bj.total_ventas_globales, vj.nombre_videojuego
+    FROM BottomVersiones bj
+    LEFT JOIN videojuego vj ON bj.id_videojuego_base = vj.id_videojuego
+) AS bv
+ON tv.id_videojuego_base != bv.id_videojuego_base
+
+UNION ALL
+
+SELECT tv.nombre_videojuego AS top_nombre_videojuego, tv.cantidad_versiones AS top_cantidad_versiones,
+       tv.total_ventas_globales AS top_ventas_globales,
+       bv.nombre_videojuego AS bottom_nombre_videojuego, bv.cantidad_versiones AS bottom_cantidad_versiones,
+       bv.total_ventas_globales AS bottom_ventas_globales
+FROM (
+    SELECT tj.id_videojuego_base, tj.cantidad_versiones, tj.total_ventas_globales, vj.nombre_videojuego
+    FROM TopVersiones tj
+    LEFT JOIN videojuego vj ON tj.id_videojuego_base = vj.id_videojuego
+) AS tv
+RIGHT JOIN (
+    SELECT bj.id_videojuego_base, bj.cantidad_versiones, bj.total_ventas_globales, vj.nombre_videojuego
+    FROM BottomVersiones bj
+    LEFT JOIN videojuego vj ON bj.id_videojuego_base = vj.id_videojuego
+) AS bv
+ON tv.id_videojuego_base != bv.id_videojuego_base;
