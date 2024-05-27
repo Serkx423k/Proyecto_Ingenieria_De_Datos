@@ -6,16 +6,23 @@ import plotly.graph_objs as go
 import pandas as pd
 import psycopg2
 
-# Función para obtener los datos del género más y menos desarrollado por una desarrolladora específica
-def obtener_comparacion_generos(desarrolladora):
-    try:
-        connection = psycopg2.connect(
+
+
+def conexion():
+    connection = psycopg2.connect(
             host='localhost',
             user='postgres',
             password='123456789',
             database='Video_Games_Sales',
             port='5432'
         )
+    return connection
+
+
+# Función para obtener los datos del género más y menos desarrollado por una desarrolladora específica
+def obtener_comparacion_generos(desarrolladora):
+    try:
+        connection = conexion()
 
         query = """
         WITH Desarrolladora_Genero_Rank AS (
@@ -65,13 +72,7 @@ def obtener_comparacion_generos(desarrolladora):
 # Obtener lista de desarrolladoras
 def obtener_desarrolladoras():
     try:
-        connection = psycopg2.connect(
-            host='localhost',
-            user='postgres',
-            password='123456789',
-            database='Video_Games_Sales',
-            port='5432'
-        )
+        connection = conexion()
 
         query = "SELECT DISTINCT nombre_desarrolladora FROM desarrolladora;"
         df = pd.read_sql_query(query, connection)
@@ -86,13 +87,7 @@ def obtener_desarrolladoras():
 # Obtener los datos del análisis de juegos por género y ventas promedio por región
 def obtener_datos():
     try:
-        connection = psycopg2.connect(
-            host='localhost',
-            user='postgres',
-            password='123456789',
-            database='Video_Games_Sales',
-            port='5432'
-        )
+        connection = conexion()
 
         query = """
         WITH GeneroJuegos AS (
@@ -135,13 +130,7 @@ df_b = obtener_datos()
 # Obtener las ventas anuales del género con mayor número de juegos desarrollados
 def obtener_ventas_anuales_genero_mayor():
     try:
-        connection = psycopg2.connect(
-            host='localhost',
-            user='postgres',
-            password='123456789',
-            database='Video_Games_Sales',
-            port='5432'
-        )
+        connection = conexion()
 
         query = """
         WITH GeneroMasDesarrollado AS (
@@ -182,13 +171,7 @@ def obtener_ventas_anuales_genero_mayor():
 # Obtener el videojuego con el mayor número de ventas totales y la plataforma asociada
 def obtener_videojuego_mayores_ventas():
     try:
-        connection = psycopg2.connect(
-            host='localhost',
-            user='postgres',
-            password='123456789',
-            database='Video_Games_Sales',
-            port='5432'
-        )
+        connection = conexion()
 
         query = """
         WITH VentasTotales AS (
